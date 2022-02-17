@@ -8,5 +8,4 @@
 --- 
 ### Стек
 - Kotlin
-- Coroutines
 - Koin

@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
 android {
     compileSdk 31
 
@@ -12,12 +15,20 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
+    }
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    signingConfigs {
+        release {
+            storeFile file(properties.getProperty("sign.storeFile"))
+            storePassword properties.getProperty("sign.storePassword")
+            keyAlias properties.getProperty("sign.keyAlias")
+            keyPassword properties.getProperty("sign.keyPassword")
+        }
     }
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -43,10 +54,6 @@ dependencies {
 
     //Kotlin
     implementation 'androidx.core:core-ktx:1.7.0'
-
-    //Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
 
     //Koin
     implementation 'io.insert-koin:koin-core:3.1.2'
