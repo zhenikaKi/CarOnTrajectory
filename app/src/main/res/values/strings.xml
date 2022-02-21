@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Car On Trajectory</string>
+    <string name="button_start">Поставить машинку</string>
 </resources>
